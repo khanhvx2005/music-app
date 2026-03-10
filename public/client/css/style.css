@@ -36,3 +36,68 @@
 }
 
 /* end header */
+
+/* Danh sách bài hát */
+.song-item {
+    display: flex;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #ffffff;
+    transition: box-shadow 0.3s ease;
+}
+
+.song-item:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.inner-image {
+    width: 140px;
+    flex-shrink: 0;
+}
+
+.inner-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    aspect-ratio: 1/1;
+}
+
+.inner-content {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+}
+
+.inner-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.inner-title a {
+    text-decoration: none;
+    color: #212529;
+}
+
+.inner-title a:hover {
+    color: #0d6efd;
+}
+
+.inner-singer,
+.inner-like,
+.inner-time {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-bottom: 4px;
+}
+
+.inner-content i {
+    width: 20px;
+    color: #adb5bd;
+
+}
+
+/* end danh sách bài hát */
