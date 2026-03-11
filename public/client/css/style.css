@@ -273,6 +273,14 @@
     color: #dc3545;
 }
 
+.singer-detail .inner-heart.active {
+    color: #dc3545;
+}
+
+.singer-detail .inner-heart.active i {
+    font-weight: 900;
+}
+
 /* 3. Khu vực phát nhạc (Avatar + Trình phát nhạc) */
 .singer-detail .inner-play {
     display: flex;

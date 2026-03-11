@@ -44,3 +44,17 @@ if (buttonLike) {
     })
 }
 // end tính năng like
+const buttonFavorite = document.querySelector("[button-favorite]");
+if (buttonFavorite) {
+    buttonFavorite.addEventListener("click", () => {
+        const idSong = buttonFavorite.getAttribute("button-favorite");
+        const isACtive = buttonFavorite.classList.contains('active');
+        const typeFavorite = isACtive ? "unfavorite" : "favorite";
+        const link = `/songs/favoriteSong/${typeFavorite}/${idSong}`;
+        fetch(link, { method: "PATCH" })
+            .then(res => res.json())
+            .then(data => {
+                buttonFavorite.classList.toggle('active');
+            })
+    })
+}

@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import Topic from "../../models/topics.model";
 import Song from "../../models/songs.model";
 import Singer from "../../models/singer.model";
+import FavoriteSong from "../../models/favorite-songs";
 // Lấy ra danh sách các bài hát
 export const list = async (req: Request, res: Response) => {
     try {
@@ -23,8 +24,10 @@ export const list = async (req: Request, res: Response) => {
                 status: "active"
             })
             song["infoSinger"] = infoSinger;
+
         }
         // console.log(songs);
+
         res.render('client/pages/songs/list', { titlePage: "Danh sách bài hát", songs: songs })
     } catch (error) {
         res.redirect('/');
@@ -50,6 +53,11 @@ export const detail = async (req: Request, res: Response) => {
             deleted: false,
             status: "active"
         }).select("title")
+        const favoriteSong = await FavoriteSong.findOne({
+            _id: song.id
+        })
+
+        song["isFavoriteSong"] = favoriteSong ? true : false;
         res.render('client/pages/songs/detail', { titlePage: "Chi tiết bài hát", song: song, singer: singer, topic: topic })
     } catch (error) {
         res.redirect("/");
@@ -80,5 +88,40 @@ export const like = async (req: Request, res: Response) => {
         })
     } catch (error) {
         res.redirect('/')
+    }
+}
+// Tính năng bài hát yêu thích
+export const favorite = async (req: Request, res: Response) => {
+    try {
+        const idSong = req.params.idSong;
+        const typeFavorite = req.params.typeFavorite;
+
+        switch (typeFavorite) {
+            case "favorite":
+                const exitsFavoriteSong = await FavoriteSong.findOne({
+                    _id: idSong
+                })
+                if (!exitsFavoriteSong) {
+                    const record = new FavoriteSong({
+                        // user_id : 
+                        song_id: idSong
+                    });
+                    await record.save();
+
+                }
+                break;
+            case "unfavorite":
+                await FavoriteSong.deleteOne({ _id: idSong })
+                break;
+            default:
+                break;
+        }
+
+        res.json({
+            code: 200,
+            message: "Thành công"
+        })
+    } catch (error) {
+        res.redirect('/');
     }
 }
