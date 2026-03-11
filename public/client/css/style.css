@@ -261,6 +261,14 @@
     color: #0d6efd;
 }
 
+.singer-detail .inner-like.active {
+    color: #0d6efd;
+}
+
+.singer-detail .inner-like.active i {
+    font-weight: 900;
+}
+
 .singer-detail .inner-heart:hover {
     color: #dc3545;
 }
@@ -301,6 +309,7 @@
     overflow: hidden;
     animation: spin-cd 15s linear infinite;
     /* Xoay đều đặn mãi mãi */
+    animation-play-state: paused;
 }
 
 .singer-detail .inner-avatar img {

@@ -55,3 +55,30 @@ export const detail = async (req: Request, res: Response) => {
         res.redirect("/");
     }
 }
+// Tính năng like 1 bài hát
+export const like = async (req: Request, res: Response) => {
+    try {
+        const idSong = req.params.idSong; // lấy id của bài hát
+        const typeLike = req.params.typeLike;
+        // Lấy ra số lượng like hiện tại của bài hát rồi cộng thêm 1
+        const song = await Song.findOne({
+            _id: idSong,
+            deleted: false,
+            status: "active"
+        }).select("like");
+        const newLike = typeLike === "like" ? song.like + 1 : song.like - 1;
+        await Song.updateOne({
+            _id: idSong
+        }, {
+            like: newLike
+        })
+        // like : [id_user_1 , id_user_2] 1 mảng chứa các user đăng nhập click nút like
+        res.json({
+            code: 200,
+            message: "Thành công",
+            like: newLike
+        })
+    } catch (error) {
+        res.redirect('/')
+    }
+}
