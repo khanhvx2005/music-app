@@ -54,6 +54,7 @@ export const detail = async (req: Request, res: Response) => {
             status: "active"
         }).select("title")
         const favoriteSong = await FavoriteSong.findOne({
+            // user_id
             _id: song.id
         })
 
@@ -95,11 +96,10 @@ export const favorite = async (req: Request, res: Response) => {
     try {
         const idSong = req.params.idSong;
         const typeFavorite = req.params.typeFavorite;
-
         switch (typeFavorite) {
             case "favorite":
                 const exitsFavoriteSong = await FavoriteSong.findOne({
-                    _id: idSong
+                    song_id: idSong
                 })
                 if (!exitsFavoriteSong) {
                     const record = new FavoriteSong({
@@ -111,7 +111,7 @@ export const favorite = async (req: Request, res: Response) => {
                 }
                 break;
             case "unfavorite":
-                await FavoriteSong.deleteOne({ _id: idSong })
+                await FavoriteSong.deleteOne({ song_id: idSong })
                 break;
             default:
                 break;
